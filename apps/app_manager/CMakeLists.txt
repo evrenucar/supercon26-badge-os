@@ -15,6 +15,6 @@ idf_component_register(SRCS "app_manager.c" "manager_ui.c" "home_apps.c" "manage
 set(BADGE_APP_MANAGER_CHANNEL "" CACHE FILEPATH "Generated public package channel header")
 if(BADGE_APP_MANAGER_CHANNEL)
     configure_file("${BADGE_APP_MANAGER_CHANNEL}" "${CMAKE_CURRENT_BINARY_DIR}/am_package_channel.h" COPYONLY)
-    target_include_directories(${COMPONENT_LIB} PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
+    target_include_directories(${COMPONENT_LIB} PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
     target_compile_definitions(${COMPONENT_LIB} PRIVATE AM_PACKAGE_CHANNEL_CONFIGURED=1)
 endif()
