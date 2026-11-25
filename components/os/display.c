@@ -85,8 +85,10 @@ static void draw_bar(uint8_t *dst, const char *const labels[4])
     for (int k = 0; k < 4; k++) {
         if (!labels[k] || !*labels[k]) continue;
         bool left = k == BTN_PLUS || k == BTN_A;
+        int len = strlen(labels[k]), scale = 2;
+        if (k == BTN_B && W - 14 - len * 16 < W - x + 16) scale = 1;
         box_into(dst, left ? 0 : W - 6, ky[k], 6, 16, true);
-        text_into(dst, left ? 14 : W - 14 - (int)strlen(labels[k]) * 16, ky[k], 2, labels[k], true);
+        text_into(dst, left ? 14 : W - 14 - len * 8 * scale, ky[k] + (2 - scale) * 4, scale, labels[k], true);
     }
     int title_x = (W - (int)strlen(bar_app) * 16 - 92) / 2;
     text_into(dst, title_x, 4, 2, bar_app, true);
@@ -267,6 +269,7 @@ static void panel_shutdown(void)
 
 void os_app(const app_t *app, const app_info_t *info)
 {
+    btn_home_prompt(false); // an app cannot leave its deferred Home policy behind
     bar_app = app ? app->name : "Home";
     bar_info = info ? info->info : NULL;
     bar_credit = info ? info->credit : NULL;

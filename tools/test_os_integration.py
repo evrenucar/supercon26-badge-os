@@ -62,6 +62,11 @@ static TaskHandle_t xTaskGetCurrentTaskHandle(void) { return current_task; }
 static TaskHandle_t xSemaphoreGetMutexHolder(int lock) { (void)lock;return mutex_depth ? mutex_owner : 0; }
 static void (*finish_owner)(void);
 static volatile bool dismiss_card;
+static bool home_prompt_enabled, home_request_pending;
+static int home_reset_calls;
+void btn_home_prompt(bool enabled) {
+ home_prompt_enabled=enabled;home_request_pending=false;home_reset_calls++;
+}
 static uint8_t output[PLANE];
 static SemaphoreHandle_t xSemaphoreCreateMutex(void) { return 1; }
 static int xSemaphoreTake(int x,int timeout) {
@@ -164,7 +169,9 @@ int main(void) {
  wifi_ev=NULL;wifi_on();assert(init_nvs==1);
  const app_t app={.name="Update"};
  const app_info_t help={.info="A compact test description.",.credit="Code: apps/update/",.launch_info=true};
- os_app(&app,&help);ui_keys("Up","Open","Down","Phone");memset(fb,0,PLANE);ui_frame(1);
+ home_prompt_enabled=home_request_pending=true;int resets_before=home_reset_calls;
+ os_app(&app,&help);assert(!home_prompt_enabled&&!home_request_pending&&home_reset_calls==resets_before+1);
+ ui_keys("Up","Open","Down","Phone");memset(fb,0,PLANE);ui_frame(1);
  assert(active_pull);ui_close();assert(!active_pull);int count=frames;ui_frame(1);assert(frames==count);
  callback_frame=true;held_mask=1;release_at=clock_us+600000;int old_flush=flushes;
  ui_info();assert(!info_visible&&!mutex_depth&&!active_pull&&flushes==old_flush+1);
@@ -173,7 +180,9 @@ int main(void) {
  os_launch_info();assert(last_timeout==2800&&!active_pull&&!info_visible);
  dismiss_card=false;callback_cancel=true;ui_info_until(&dismiss_card);assert(dismiss_card&&!info_visible);
  count=frames;ui_info_until(&dismiss_card);assert(frames==count);
- os_app(NULL,NULL);ui_frame(1);assert(!in_app);ui_close();
+ home_prompt_enabled=home_request_pending=true;resets_before=home_reset_calls;
+ os_app(NULL,NULL);assert(!home_prompt_enabled&&!home_request_pending&&home_reset_calls==resets_before+1);
+ ui_frame(1);assert(!in_app);ui_close();
  variant84=true;pulls=20;ui_frame(1); /* unchanged frame does not reopen */
  fb[TOP*W/8+50]^=1;int n=resets;ui_frame(1);assert(resets==n+1);ui_close();
  // Restart must wait for an owner that lasts beyond the old three-second timeout.
@@ -204,5 +213,5 @@ int main(void) {
 '''
 code=preamble+'\n'+source('components/os/settings.c')+'\n'+source('components/os/wifi.c')+'\n'+source('components/os/draw.c')+'\n'+source('components/os/display.c')+'\n'+source('main/main.c')+'\n'+checks
 (out/'check.c').write_text(code)
-subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-fsanitize=address,undefined','-g','-I',str(root/'components/os/include'),str(out/'check.c'),'-o',str(out/'check')],check=True)
+subprocess.run(['cc','-std=c11','-fno-common','-Wall','-Wextra','-Werror','-fsanitize=address,undefined','-g','-I',str(root/'components/os/include'),str(out/'check.c'),'-o',str(out/'check')],check=True)
 subprocess.run([str(out/'check')],check=True)
