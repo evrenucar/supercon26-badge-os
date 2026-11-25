@@ -9,6 +9,7 @@ import struct
 root = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('elf', type=Path)
+parser.add_argument('--version', default='1.0.1', help='Expected package version')
 parser.add_argument('--output', type=Path, help='Optional audit JSON output')
 args = parser.parse_args()
 path = args.elf.resolve()
@@ -44,7 +45,8 @@ base = mapped['.text'][3]
 assert entry % 4 == 0 and base <= entry < base + mapped['.text'][5]
 info = sections['.badge_app']
 assert (info[1], info[2], info[5], info[8]) == (1, 0, 48, 4)
-assert elf[info[4]:info[4] + 48] == struct.pack('<II16s24s', 0x32504142, 2, b'doom', b'1.0.0')
+assert elf[info[4]:info[4] + 48] == struct.pack('<II16s24s', 0x32504142, 2, b'doom', args.version.encode())
+assert not any(prefix in elf for prefix in (b'/Users/', b'/home/')), 'Personal build path in module'
 
 dyn = sections['.dynsym']
 assert dyn[9] == 16 and dyn[5] % 16 == 0

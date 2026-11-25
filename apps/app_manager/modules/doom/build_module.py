@@ -4,11 +4,13 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import shlex
 import struct
 import subprocess
 
 root = Path(__file__).resolve().parent
+version = re.search(r'#define DOOM_APP_VERSION "([^"]+)"', (root / 'doom_module.c').read_text())[1]
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--pilot', required=True, type=Path, help='Existing SDK build with original Doom compile_commands.json')
 parser.add_argument('--toolroot', required=True, type=Path, help='Pinned esp-15.2.0_20251204 xtensa-esp-elf root')
@@ -46,12 +48,22 @@ def source_inputs():
 
 def compile_input(item, source, engine=False):
     obj = out / (source.stem + '.o')
+    if source.name == 'info.c':
+        text = source.read_text()
+        for name in ('doom_states', 'doom_mobjinfo'):
+            old = f'section(".rodata.{name}")'
+            assert text.count(old) == 1
+            text = text.replace(old, f'section(".data.{name}")')
+        source = out / 'info.c'
+        source.write_text(text)
     args = shlex.split(item['command'])
     assert args[0] == gcc
     args[args.index('-o') + 1] = str(obj)
     args[args.index('-c') + 1] = str(source)
     args += ['-Os', '-g0', '-fPIC', '-fvisibility=hidden', '-mno-target-align', '-fno-builtin',
-             '-I', root, '-I', native, '-include', root / 'local_errno.h']
+             f'-ffile-prefix-map={repo}/=', f'-fmacro-prefix-map={repo}/=',
+             f'-ffile-prefix-map={out}/=components/doomgeneric/', f'-fmacro-prefix-map={out}/=components/doomgeneric/',
+             '-iquote', doom, '-I', root, '-I', native, '-include', root / 'local_errno.h']
     if engine:
         args += ['-DDOOM_ENGINE_INTERCEPT', '-include', root / 'doom_glue.h']
     run(*args, cwd=item['directory'])
@@ -63,11 +75,6 @@ with ThreadPoolExecutor(max_workers=4) as pool:
     objects = list(pool.map(lambda item: compile_input(item, doom / Path(item['file']).name, True), commands))
 for name in ('doom_module', 'doom_save', 'doom_console', 'doom_format', 'atoi_local'):
     objects.append(compile_input(commands[0], root / f'{name}.c'))
-
-tables = out / 'info.data.o'
-run(objcopy, '--rename-section', '.rodata.doom_mobjinfo=.data.doom_mobjinfo',
-    '--rename-section', '.rodata.doom_states=.data.doom_states', out / 'info.o', tables)
-objects[objects.index(out / 'info.o')] = tables
 
 verbose = subprocess.check_output([ld, '-m', 'elf32xtensa', '-shared', '--verbose'], text=True)
 linker = verbose.split('==================================================\n')[1]
@@ -84,10 +91,10 @@ run(gcc, '-nostartfiles', '-nostdlib', '-fPIC', '-shared', '-Wl,--gc-sections,-B
     '-Wl,--start-group', lib / 'libc.a', lib / 'libm.a', libgcc, '-Wl,--end-group', '-o', raw)
 assert subprocess.check_output([nm, '-D', '-u', raw], text=True).split() == ['U', 'badge_app_get_api']
 
-elf = out / 'doom-1.0.0.app.elf'
+elf = out / f'doom-{version}.app.elf'
 metadata = out / 'module-info.bin'
 run(objcopy, '--dump-section', f'.badge_app={metadata}', out / 'doom_module.o')
-assert metadata.read_bytes() == struct.pack('<II16s24s', 0x32504142, 2, b'doom', b'1.0.0')
+assert metadata.read_bytes() == struct.pack('<II16s24s', 0x32504142, 2, b'doom', version.encode())
 run(strip, '--strip-unneeded', '--remove-section=.comment', '--remove-section=.dynamic',
     '--remove-section=.eh_frame', '--remove-section=.xt.lit', '--remove-section=.xt.prop',
     '--remove-section=.xtensa.info', '-o', elf, raw)
@@ -114,7 +121,8 @@ used = len(active)
 bits[off:off + original] = active + bytes(original - used)
 struct.pack_into('<I', bits, shoff + index * stride + 20, used)
 elf.write_bytes(bits)
-manifest = dict(schema=1, id='doom', version='1.0.0', target='esp32s3', abi=2,
+assert not any(prefix in bits for prefix in (b'/Users/', b'/home/')), 'Personal build path in module'
+manifest = dict(schema=1, id='doom', version=version, target='esp32s3', abi=2,
                 sdk='6.0.2', loader='2.1.0', bytes=len(bits), sha256=hashlib.sha256(bits).hexdigest())
 (out / 'unsigned-manifest.json').write_text(json.dumps(manifest, sort_keys=True, indent=2) + '\n')
 print(f'{elf}: {len(bits)} bytes; sha256 {hashlib.sha256(bits).hexdigest()}; sole import badge_app_get_api')

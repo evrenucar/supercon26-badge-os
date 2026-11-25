@@ -11,7 +11,7 @@
 #include "i_video.h"
 #include "w_file.h"
 
-#define DOOM_APP_VERSION "1.0.0"
+#define DOOM_APP_VERSION "1.0.1"
 #ifdef __XTENSA__
 BADGE_NATIVE_INFO("doom", DOOM_APP_VERSION);
 #endif
