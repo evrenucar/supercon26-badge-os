@@ -1,111 +1,26 @@
-# badge os
+# Badge OS signed app channel
 
-A small operating system for the Hackaday Supercon 2026 "Billboard Badge" (ESP32-S3 with 8 MB PSRAM and a 9.7"
-960x672 black/white/red e-paper), written in C on ESP-IDF. The badge boots to an iOS-style home screen of app icons.
-Apps take over the badge; hold MENU + and MENU - together to get back home.
+Signed SpaceInv 1.0.2, Asteroids, Video, Codex Board, Hackaday, Messages and Doom 1.0.1 packages for the managed App Manager firmware. See [NOTICES](NOTICES.md) and the corresponding source references for attribution and licenses.
 
-## Features
-- **Home screen**: 8 app icons per page, OS version bottom right.
-- **Calm e-paper frames**: 3.5-4 frames/s, only the pixels that change move, nothing flashes. A custom waveform for
-  the panel's two Pervasive Displays controllers; both panel versions Hackaday shipped (E2969JS0B1 and E2969JS084,
-  ~1.6 frames/s) are detected at power-on.
-- **Top bar on every screen**: what each button does right now, printed beside the button; app name, username,
-  OS version and battery in the middle.
-- **Online update**: pulls the latest GitHub release over Wi-Fi (OTA, with rollback if the new version doesn't
-  boot).
-- **Badge-to-badge update**: one badge flashes its own firmware onto another over a USB-C cable (USB host mode).
-- **Ranging**: badges find each other with ESP-NOW and measure their distance with Wi-Fi FTM (802.11mc round-trip
-  time), on every screen. Each badge shares its measurements, so every badge learns the distances between the others.
-  An app that needs the radio otherwise takes it over.
-- **Settings**: saved in flash and kept across updates; edited from a phone through the Settings app.
-- **Add-ons**: an AS5600 magnetic knob on an SAO port as a controller, a Noisy Cricket SAO as the speaker.
+Use the [fork trial source c12985fd](https://github.com/evrenucar/supercon26-badge-os/tree/c12985fd729754f7792b0dea1bef5e65d4bb28fe), available on `codex/app-channel-ready`. It contains PR #6, PR #8 and the public-channel include fix; the reviewed PR #8 head is unchanged. This branch holds channel assets. Run the following from that firmware checkout with ESP-IDF 6.0.2 active:
 
-## Apps
-The default Core14 build contains Badge, Clock, Clock Faces, Update, Pong, Snake, Life, Tetris, Radar,
-Source, Weather, Settings, FAQ and App Manager. Installable apps start absent and appear on Home only after a
-verified installation. A user-supplied signed package channel is required; none is enabled by default.
-
-| App | What it does |
-|---|---|
-| Badge | Name tag: "HELLO my name is", or your own text or picture from Settings |
-| Clock | A huge 24-hour dial moving past a fixed hand, your name beside it, the Supercon talks on con days |
-| Update | Online update from GitHub, flash another badge over USB-C, or put the speaker firmware on a Cricket |
-| Pong | Two-badge Pong over ESP-NOW, buttons or knob |
-| Snake | Nonstop snake with wrap-around walls |
-| Life | Conway's Game of Life, 2340 cells, runs by itself |
-| Tetris | Falling blocks |
-| SpaceInv, Asteroids (installable) | Descending aliens and drifting rocks |
-| Radar | Nearby badges running badge os, with distances, and a map once 3+ badges are in range |
-| Source | A QR code to this repo |
-| Hackaday (installable) | Hackaday's latest posts with their images, one per screen; open one to read it |
-| Video (installable) | A 15 s clip at 4 frames/s, to show off the panel |
-| Weather | Current weather and a 5-day forecast (Open-Meteo) for a saved city or coordinates |
-| Settings | Opens a Wi-Fi hotspot "Badge-XXXX" (password `supercon`) with a settings page: username, Wi-Fi, Badge text or picture, weather place and units |
-| Codex Board (installable) | Desk display for Codex terminal sessions: working, reply ready, needs input, quota; red LEDs on attention. Feed from `tools/codex_board` over USB or Wi-Fi ([apps/codex_board/README.md](apps/codex_board/README.md)) |
-| Doom (installable) | The shareware episode, downloaded once into flash |
-| Messages (installable) | Phone-composed badge threads, replies and unread markers |
-| FAQ | Offline help topics |
-| Clock Faces | Digital and analog everyday clock faces |
-| App Manager | Install, open, update and uninstall signed apps |
-
-## Controls
-The four buttons sit two in each top corner: MENU + above A on the left, MENU - above B on the right. The top bar
-shows what each one does, right beside it. On the home screen MENU + / MENU - move left / right and A or B opens
-the app. Hold MENU + and MENU - together for half a second to go back home from any app.
-
-## Layout
-| Path | What |
-|---|---|
-| [`main/`](main) | boot (`main.c`), the home screen (`home.c`), the app list (`apps.c`) |
-| [`components/os/`](components/os) | the OS services: display driver, drawing, buttons, Wi-Fi, ranging, settings, sound, LEDs, SAO add-ons, battery |
-| [`components/os/include/badge/`](components/os/include/badge) | the app API, one documented header per service; apps include `badge/badge.h` |
-| [`apps/<name>/`](apps) | one folder and component per app, with its assets and tools; [apps/README.md](apps/README.md): how to write one |
-| [`components/`](components) | also `stb` (image decoding), `cricket` (Noisy Cricket SAO), `doomgeneric` (the Doom engine) |
-| [`docs/os.md`](docs/os.md) | how the OS works: boot, the display driver, who owns what, the radio rules, flash layout |
-| [`docs/DEVICE_INFO.md`](docs/DEVICE_INFO.md) | the hardware: pins, buttons, the panel's refresh modes and timings, ghosting, power, flash |
-
-## Install
-Download `badge_os_full.bin` from the [latest release](https://github.com/yigitabi5444/supercon26-badge-os/releases/latest)
-and flash it at 0x0:
 ```sh
-esptool --chip esp32s3 -p /dev/cu.usbmodem101 write-flash 0x0 badge_os_full.bin
+channel_dir="$PWD/build/fork-channel"
+base_url="https://raw.githubusercontent.com/evrenucar/supercon26-badge-os/app-channel"
+mkdir -p "$channel_dir"
+curl --fail --location "$base_url/public-key.pem" --output "$channel_dir/public-key.pem"
+printf '%s  %s\n' '6628816d577d2d3c992a9d95d87c1102e6de0b2e7e491d0089a6f881e02e1c97' "$channel_dir/public-key.pem" | shasum -a 256 -c -
+python3 apps/app_manager/tools/configure_channel.py \
+  --base-url "$base_url" --public-key "$channel_dir/public-key.pem" \
+  --output "$channel_dir/app-channel.h"
+idf.py -B build/fork-managed -DSDKCONFIG="$PWD/build/fork-managed/sdkconfig" \
+  -DBADGE_APP_MANAGER=ON -DBADGE_APP_MANAGER_CHANNEL="$channel_dir/app-channel.h" build
 ```
-A badge running the stock MicroPython firmware has to be put into download mode first: hold BOOT, tap RESET.
-After that, use Update -> Online update. Update -> Flash another badge accepts only recognized legacy partition
-tables; a stock MicroPython or unknown-layout receiver needs host provisioning.
 
-## Build
-ESP-IDF 6.0.2. Use separate build/config directories for the two profiles:
-```sh
-# Core14 and its separate fresh-provisioning layout
-idf.py -B build/core -DSDKCONFIG=build/core/sdkconfig build
-# Legacy registry/layout, also used by the release workflow
-idf.py -B build/legacy -DSDKCONFIG=build/legacy/sdkconfig -DBADGE_APP_MANAGER=OFF build
-```
-Core14 provisioning and package-channel setup are described in [App Manager](apps/app_manager/README.md).
-An app-only OTA update retains the device's old partition table; it does not create or migrate an app store.
-The generated empty `appstore.bin` is excluded from ordinary flash/update arguments. On a blank badge only
-(the following erases the app store), use the separate Core14 build/config path:
-```sh
-idf.py -B build/core -DSDKCONFIG=build/core/sdkconfig -p PORT flash appstore-flash
-```
-Existing stores need the same APP public key to open their installed packages.
+The public-key checksum above pins the same APP verification key as the previously installed packages. `app-channel.h` in this branch is the ready-generated equivalent. It contains public configuration only. Omitting the CMake channel input leaves upstream's default trust unchanged.
 
-Online update needs Wi-Fi credentials at build time in `main/wifi_secret.h` (gitignored):
-```c
-#define WIFI_SSID "your-network"
-#define WIFI_PASS "your-password"
-```
-Without the file everything else works, and Online update says it has no Wi-Fi.
+Existing managed badges must keep their partition table, installed store and matching APP key. This build command does not flash anything. Never flash an empty appstore image over an existing store. Stock partition layouts need separately reviewed first provisioning; app-only OTA cannot create an app store.
 
-Releases: pushing a `v*` tag runs `.github/workflows/release.yml`, which explicitly builds the legacy profile and attaches
-`badge_os.bin` (what Online update downloads) and `badge_os_full.bin` to the GitHub release.
+Video's signed clip is included under `video/assets/`. Doom's matching IWAD is a separate prerequisite. This channel updates apps; it does not change the OS Online update route.
 
-## License
-GPL-2.0 (`LICENSE`), because the Doom app links the doomgeneric engine (`components/doomgeneric`, GPL-2.0). Bundled
-third-party parts keep their own terms: stb_image (public domain), the 8x8 font (public domain), the Clock's DejaVu
-fonts (DejaVu license). Doom's game data is id Software's unmodified shareware `DOOM1.WAD`, downloaded by the badge
-from the `doom-wad` release, not part of this source. The panel driver started in
-[supercon26-badge-idf](https://github.com/yigitabi5444/supercon26-badge-idf).
-
-Unofficial. Not affiliated with Hackaday or Pervasive Displays.
+Doom1.0.1 removes build-machine names from diagnostic filename strings. Its exact corresponding source is https://github.com/evrenucar/supercon26-badge-os/tree/09fac423d2943334a09a2731310f530d284d0a3f/apps/app_manager/modules/doom . ExistingDoom1.0.0 receipts continue to verify with the unchanged key; the public channel offers the newer1.0.1.

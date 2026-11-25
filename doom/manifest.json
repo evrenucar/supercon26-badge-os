@@ -1,0 +1,11 @@
+{
+  "abi": 2,
+  "bytes": 328556,
+  "id": "doom",
+  "loader": "2.1.0",
+  "schema": 1,
+  "sdk": "6.0.2",
+  "sha256": "d15c50315c38339e124735d30a03e100eee163294c0bc2d7a364f7fb761b215b",
+  "target": "esp32s3",
+  "version": "1.0.1"
+}

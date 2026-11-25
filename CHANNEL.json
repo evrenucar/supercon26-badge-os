@@ -1,0 +1,279 @@
+{
+  "schema": 1,
+  "channel": "evrenucar fork app-channel",
+  "base_url": "https://raw.githubusercontent.com/evrenucar/supercon26-badge-os/app-channel",
+  "public_key_file": "public-key.pem",
+  "public_key_pem_sha256": "6628816d577d2d3c992a9d95d87c1102e6de0b2e7e491d0089a6f881e02e1c97",
+  "public_key_spki_sha256": "7fe8389ea22f030dc63f516bffeff60bea93c73ecbf475dbcd5464ea3c3c24f3",
+  "explicit_configuration_header": "app-channel.h",
+  "firmware_source_commit": "c12985fd729754f7792b0dea1bef5e65d4bb28fe",
+  "packages": {
+    "aliens": {
+      "version": "1.0.2",
+      "bytes": 4928,
+      "sha256": "dcab2543cc63edd57a3bebbb5e8d2f695645e8e0b5ac147f24c4a118967c32bd",
+      "source_commit": "e901877daa4ba6caaa987096df67fec0e6f41329",
+      "source_url": "https://github.com/evrenucar/supercon26-badge-os/tree/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/modules/aliens",
+      "build_documentation": "https://github.com/evrenucar/supercon26-badge-os/blob/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/README.md"
+    },
+    "rocks": {
+      "version": "1.0.0",
+      "bytes": 13120,
+      "sha256": "9031a91750c17ef6b22c5264add430a77de887e2c5c6de9a2e92b4bd969de521",
+      "source_commit": "e901877daa4ba6caaa987096df67fec0e6f41329",
+      "source_url": "https://github.com/evrenucar/supercon26-badge-os/tree/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/modules/rocks",
+      "build_documentation": "https://github.com/evrenucar/supercon26-badge-os/blob/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/README.md"
+    },
+    "video": {
+      "version": "1.0.0",
+      "bytes": 4880,
+      "sha256": "1485e96294e600245beec5e04c64f00387dad1abe2fdc54bc8a3f3054ed18d53",
+      "source_commit": "e901877daa4ba6caaa987096df67fec0e6f41329",
+      "source_url": "https://github.com/evrenucar/supercon26-badge-os/tree/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/modules/video",
+      "build_documentation": "https://github.com/evrenucar/supercon26-badge-os/blob/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/README.md"
+    },
+    "codex_board": {
+      "version": "1.0.0",
+      "bytes": 13240,
+      "sha256": "b501f2f0cb012f0159aebb1b1259f944f753c811a7593536598fd6c5424d1da6",
+      "source_commit": "e901877daa4ba6caaa987096df67fec0e6f41329",
+      "source_url": "https://github.com/evrenucar/supercon26-badge-os/tree/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/modules/codex_board",
+      "build_documentation": "https://github.com/evrenucar/supercon26-badge-os/blob/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/README.md"
+    },
+    "hackaday": {
+      "version": "1.0.0",
+      "bytes": 12572,
+      "sha256": "da65d24ea2c15684121839ada8337e487f4b1ec849122fab8df0a6a7bc440933",
+      "source_commit": "e901877daa4ba6caaa987096df67fec0e6f41329",
+      "source_url": "https://github.com/evrenucar/supercon26-badge-os/tree/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/modules/hackaday",
+      "build_documentation": "https://github.com/evrenucar/supercon26-badge-os/blob/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/README.md"
+    },
+    "messaging": {
+      "version": "1.0.0",
+      "bytes": 17216,
+      "sha256": "3e0a6bf74dc441e302e612c963c5e7f29960810e3eb99cab2fa2d13424b4cb45",
+      "source_commit": "e901877daa4ba6caaa987096df67fec0e6f41329",
+      "source_url": "https://github.com/evrenucar/supercon26-badge-os/tree/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/modules/messaging",
+      "build_documentation": "https://github.com/evrenucar/supercon26-badge-os/blob/e901877daa4ba6caaa987096df67fec0e6f41329/apps/app_manager/README.md"
+    },
+    "doom": {
+      "version": "1.0.1",
+      "bytes": 328556,
+      "sha256": "d15c50315c38339e124735d30a03e100eee163294c0bc2d7a364f7fb761b215b",
+      "source_commit": "09fac423d2943334a09a2731310f530d284d0a3f",
+      "source_url": "https://github.com/evrenucar/supercon26-badge-os/tree/09fac423d2943334a09a2731310f530d284d0a3f/apps/app_manager/modules/doom",
+      "build_documentation": "https://github.com/evrenucar/supercon26-badge-os/blob/09fac423d2943334a09a2731310f530d284d0a3f/apps/app_manager/README.md"
+    }
+  },
+  "video_asset": {
+    "clip": "video/assets/clip.vid",
+    "receipt": "video/assets/receipt.bin",
+    "signature": "video/assets/receipt.sig",
+    "bytes": 819646,
+    "sha256": "c804c2cbb5df2830f17a814d65be2fab229b0825d6e89d089a64551d5d6d6df7"
+  },
+  "stock_OTA_changed": false,
+  "no_WAD_distributed": true,
+  "files": {
+    "NOTICES.md": {
+      "bytes": 2388,
+      "sha256": "217202c7f8f900ef19e1b81a8eb1e7ec8172ccf403c381a14884370d34875927"
+    },
+    "README.md": {
+      "bytes": 2479,
+      "sha256": "d685636b61d730eb53cf1f1f6fd6331ce43dca1d377a8e2a83c761363a85b30f"
+    },
+    "aliens/LICENSE": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    "aliens/NOTICE.md": {
+      "bytes": 501,
+      "sha256": "572b10e67b5b2c3671cfdd2b58ef6c270e8c9d8e6923392a08f7c284156818f3"
+    },
+    "aliens/manifest.json": {
+      "bytes": 229,
+      "sha256": "855175a2aff9e8f13fee54ac3bec8d984d798db510ea62b4a85ed0aa698b2a29"
+    },
+    "aliens/manifest.sig": {
+      "bytes": 71,
+      "sha256": "83f954b6a4a5d3c3ddb5ea471e93021f64352705a4c9d8349ff57e2371052eae"
+    },
+    "aliens/module.elf": {
+      "bytes": 4928,
+      "sha256": "dcab2543cc63edd57a3bebbb5e8d2f695645e8e0b5ac147f24c4a118967c32bd"
+    },
+    "app-channel.h": {
+      "bytes": 3800,
+      "sha256": "96c97dc5ffa312d40529c6e834007978dbeb26561bdb786a690529265f976650"
+    },
+    "codex_board/LICENSE": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    "codex_board/NOTICE.md": {
+      "bytes": 538,
+      "sha256": "90a33f2413d70c540fc22228d1803e32a924e26a03a740735c551e0199d7c1a2"
+    },
+    "codex_board/manifest.json": {
+      "bytes": 235,
+      "sha256": "945a658d09b798098da4a21cf5a693c3962cc5ada3b1e1accc15c72d4c55edf6"
+    },
+    "codex_board/manifest.sig": {
+      "bytes": 71,
+      "sha256": "e51c5619bb1daee9ebf8fe7beb756b8eed77a36464705820922b2ea0deca6b10"
+    },
+    "codex_board/module.elf": {
+      "bytes": 13240,
+      "sha256": "b501f2f0cb012f0159aebb1b1259f944f753c811a7593536598fd6c5424d1da6"
+    },
+    "doom/LICENSE": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    "doom/NOTICE.md": {
+      "bytes": 719,
+      "sha256": "91ace1159da10afca6040d69c503b7b6f6ed136986a6c08e23d3aceba63f7a01"
+    },
+    "doom/manifest.json": {
+      "bytes": 229,
+      "sha256": "b599963c11f1f31e9cc99f159be0a24680af6477d810f4953a2489664ef5bead"
+    },
+    "doom/manifest.sig": {
+      "bytes": 71,
+      "sha256": "a8eac00af393541464d205a6dc8728cce5bbd76315b206fdceeaa808d2d612ff"
+    },
+    "doom/module.elf": {
+      "bytes": 328556,
+      "sha256": "d15c50315c38339e124735d30a03e100eee163294c0bc2d7a364f7fb761b215b"
+    },
+    "hackaday/LICENSE": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    "hackaday/NOTICE.md": {
+      "bytes": 507,
+      "sha256": "05b264a9dc6b51b32589db8fac06810d1c7a73b63bb89c277c5361ef8cd96164"
+    },
+    "hackaday/manifest.json": {
+      "bytes": 232,
+      "sha256": "ed15e6d16ba3df767ec1bf050644cb2505e16c31da3dce5a90c6f680b5bbf235"
+    },
+    "hackaday/manifest.sig": {
+      "bytes": 71,
+      "sha256": "e4763bb8c08bff016cf092ba0783fa3fdcfa3cb3bb1e20b2d3d692f095755ce1"
+    },
+    "hackaday/module.elf": {
+      "bytes": 12572,
+      "sha256": "da65d24ea2c15684121839ada8337e487f4b1ec849122fab8df0a6a7bc440933"
+    },
+    "licenses/GCC-GPL-3.0.txt": {
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    "licenses/GCC-Runtime-Exception.txt": {
+      "bytes": 3324,
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+    },
+    "licenses/GPL-2.0.txt": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    "licenses/font8x8-Public-Domain.txt": {
+      "bytes": 491,
+      "sha256": "437b53d345c10df5631cd5aed162560c3f03ea84d8d5fc504a7966cb273fa05a"
+    },
+    "licenses/newlib-NOTICES.txt": {
+      "bytes": 78261,
+      "sha256": "fcfb5ec69b6ab52676dcc4dab7cf4338c8000ef97812dadd35b8592a640a8419"
+    },
+    "licenses/picolibc-NOTICES.txt": {
+      "bytes": 237194,
+      "sha256": "1e427387b690483dad761268beb0f09a824ecba6132c4dfee78d1fb21a6e75b5"
+    },
+    "licenses/qrcodegen-MIT.txt": {
+      "bytes": 1254,
+      "sha256": "cd6b03510fc383b06a11c8abe186629ab47cee349e7ebf307437fe0d4afd7eea"
+    },
+    "licenses/upstream-vendor-LICENSE.txt": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "messaging/LICENSE": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    "messaging/NOTICE.md": {
+      "bytes": 544,
+      "sha256": "9c24d276d838542966bbab93836068c9bca8ef59658d0a48ceac54acfd9070f4"
+    },
+    "messaging/manifest.json": {
+      "bytes": 233,
+      "sha256": "52f608eb727c432b7c1214c52e2cc4697b7bf76a7a5fdffc03ac42f7078d55e7"
+    },
+    "messaging/manifest.sig": {
+      "bytes": 71,
+      "sha256": "b8745ef73729778946f451144ea209cb823d59889c466d636b0c2c59432c1271"
+    },
+    "messaging/module.elf": {
+      "bytes": 17216,
+      "sha256": "3e0a6bf74dc441e302e612c963c5e7f29960810e3eb99cab2fa2d13424b4cb45"
+    },
+    "public-key.pem": {
+      "bytes": 178,
+      "sha256": "6628816d577d2d3c992a9d95d87c1102e6de0b2e7e491d0089a6f881e02e1c97"
+    },
+    "rocks/LICENSE": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    "rocks/NOTICE.md": {
+      "bytes": 500,
+      "sha256": "644e263425cb5f1e746f3f72b17abc2ea5613d8e203f0705cfdb9d2127eb62e5"
+    },
+    "rocks/manifest.json": {
+      "bytes": 229,
+      "sha256": "9446a48c3ead5300af39ea028e5619c29182b838b7805a8120631448f143fd72"
+    },
+    "rocks/manifest.sig": {
+      "bytes": 71,
+      "sha256": "e25f780ef87b82530729837bd89556997df1591dbe4622b5961e0def18e03e32"
+    },
+    "rocks/module.elf": {
+      "bytes": 13120,
+      "sha256": "9031a91750c17ef6b22c5264add430a77de887e2c5c6de9a2e92b4bd969de521"
+    },
+    "video/LICENSE": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    "video/NOTICE.md": {
+      "bytes": 496,
+      "sha256": "ddeab26c96074050bfb7a7f98354e976d08ee17c98c9e4fce826587e31a2b4a7"
+    },
+    "video/assets/clip.vid": {
+      "bytes": 819646,
+      "sha256": "c804c2cbb5df2830f17a814d65be2fab229b0825d6e89d089a64551d5d6d6df7"
+    },
+    "video/assets/receipt.bin": {
+      "bytes": 56,
+      "sha256": "8aa49f10263398a12ec412de94ee90b0db498d1fcad3161c08e0431743c01d9c"
+    },
+    "video/assets/receipt.sig": {
+      "bytes": 70,
+      "sha256": "0dbbdd3f5a78d77e1a3ed05c71a8e7e3f9a9459f6b53153276fe5073f2f68e00"
+    },
+    "video/manifest.json": {
+      "bytes": 228,
+      "sha256": "4df6cf1c9eb9bfdc148e73a3c5da6ecf4baa97d890651e2fef44eea593fdd92f"
+    },
+    "video/manifest.sig": {
+      "bytes": 70,
+      "sha256": "e60e130d2f22cc38f87658a681a14d74c2643372ca9433a2002a94ed36523dbf"
+    },
+    "video/module.elf": {
+      "bytes": 4880,
+      "sha256": "1485e96294e600245beec5e04c64f00387dad1abe2fdc54bc8a3f3054ed18d53"
+    }
+  }
+}

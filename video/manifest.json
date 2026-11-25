@@ -1,0 +1,11 @@
+{
+  "abi": 2,
+  "bytes": 4880,
+  "id": "video",
+  "loader": "2.1.0",
+  "schema": 1,
+  "sdk": "6.0.2",
+  "sha256": "1485e96294e600245beec5e04c64f00387dad1abe2fdc54bc8a3f3054ed18d53",
+  "target": "esp32s3",
+  "version": "1.0.0"
+}

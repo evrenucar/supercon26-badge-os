@@ -1,0 +1,11 @@
+{
+  "abi": 2,
+  "bytes": 13120,
+  "id": "rocks",
+  "loader": "2.1.0",
+  "schema": 1,
+  "sdk": "6.0.2",
+  "sha256": "9031a91750c17ef6b22c5264add430a77de887e2c5c6de9a2e92b4bd969de521",
+  "target": "esp32s3",
+  "version": "1.0.0"
+}

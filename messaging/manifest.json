@@ -1,0 +1,11 @@
+{
+  "abi": 2,
+  "bytes": 17216,
+  "id": "messaging",
+  "loader": "2.1.0",
+  "schema": 1,
+  "sdk": "6.0.2",
+  "sha256": "3e0a6bf74dc441e302e612c963c5e7f29960810e3eb99cab2fa2d13424b4cb45",
+  "target": "esp32s3",
+  "version": "1.0.0"
+}

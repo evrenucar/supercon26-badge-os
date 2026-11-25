@@ -1,0 +1,11 @@
+{
+  "abi": 2,
+  "bytes": 12572,
+  "id": "hackaday",
+  "loader": "2.1.0",
+  "schema": 1,
+  "sdk": "6.0.2",
+  "sha256": "da65d24ea2c15684121839ada8337e487f4b1ec849122fab8df0a6a7bc440933",
+  "target": "esp32s3",
+  "version": "1.0.0"
+}

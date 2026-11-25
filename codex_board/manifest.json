@@ -1,0 +1,11 @@
+{
+  "abi": 2,
+  "bytes": 13240,
+  "id": "codex_board",
+  "loader": "2.1.0",
+  "schema": 1,
+  "sdk": "6.0.2",
+  "sha256": "b501f2f0cb012f0159aebb1b1259f944f753c811a7593536598fd6c5424d1da6",
+  "target": "esp32s3",
+  "version": "1.0.0"
+}
