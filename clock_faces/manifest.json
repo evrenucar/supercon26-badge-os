@@ -1,0 +1,11 @@
+{
+  "abi": 1,
+  "bytes": 260,
+  "id": "clock_faces",
+  "loader": "none",
+  "schema": 1,
+  "sdk": "data",
+  "sha256": "2e7632df7545059a77e30e4e6b6a26604e2d7d15a1cc70937dc7841eb4ad0622",
+  "target": "clock_faces",
+  "version": "1.0.0"
+}
